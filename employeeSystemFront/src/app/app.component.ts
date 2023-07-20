@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{     // by implementing the OnInt in
     this.employeeService.getEmployees().subscribe(
       (response : Employee[]) =>{
         this.employees = response;
-        console.log(response)
+        console.log("Hi")
       }
     ),
     (error : any) => {
