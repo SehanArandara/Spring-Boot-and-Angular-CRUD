@@ -12,7 +12,7 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input type="search" name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..."
-        required>
+        (ngModelChange)="searchEmployee(key.value)" #key="ngModel" ngModel required>
     </form>
   </div>
 </nav>
@@ -40,7 +40,7 @@
             <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip"
               (click)="openModel(employee,'edit')" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
             <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip"
-            (click)="openModel(employee,'delete')" data-original-title="Delete"><i class="fa fa-times"></i></a>
+              (click)="openModel(employee,'delete')" data-original-title="Delete"><i class="fa fa-times"></i></a>
           </div>
         </div>
       </div>
@@ -114,7 +114,8 @@
             <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control" id="name"
               aria-describedby="emailHelp" placeholder="Name">
           </div>
-          <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+          <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id"
+            placeholder="Email">
           <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control"
             id="userCode" placeholder="Email">
           <div class="form-group">
@@ -149,22 +150,24 @@
 </div>
 
 <!-- Delete Modal -->
-<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
-     <div class="modal-content">
-        <div class="modal-header">
-           <h5 class="modal-title" id="deleteModelLabel">Delete Employee</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModelLabel">Delete Employee</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete employee {{deleteEmployee?.name}}?</p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button (click)="onDeleteEmployee(deleteEmployee?.id)" class="btn btn-danger"
+            data-dismiss="modal">Yes</button>
         </div>
-        <div class="modal-body">
-           <p>Are you sure you want to delete employee {{deleteEmployee?.name}}?</p>
-           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <button (click)="onDeleteEmployee(deleteEmployee?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
-           </div>
-        </div>
-     </div>
+      </div>
+    </div>
   </div>
 </div>

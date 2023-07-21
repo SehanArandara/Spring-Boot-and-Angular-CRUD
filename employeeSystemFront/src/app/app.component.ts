@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {     // by implementing the OnInt i
     if (mode === 'add') {
       button.setAttribute('data-target', '#addEmployeeModal')
     }
- 
+
     if (mode === 'edit') {
       this.editEmployee = employee     // old employee is fill eual to the opend form employee 
       button.setAttribute('data-target', '#updateEmployeeModal')
@@ -62,41 +62,57 @@ export class AppComponent implements OnInit {     // by implementing the OnInt i
   public onAddEmployee(addForm: NgForm): void {
     document.getElementById('add-employee-form')?.click()      // this will click the
     this.employeeService.addEmployees(addForm.value).subscribe(    // way to catch the data from the backend in frontend
-      (response : Employee )=>{
+      (response: Employee) => {
         console.log(response)
         this.getEmployess();      // referesh and show new added one 
         addForm.reset();
       },
-      (error : any) =>{
+      (error: any) => {
         alert(error.message)
         addForm.reset();
       }
-    )        
+    )
   }
 
   public onUpdateEmployee(employee: Employee): void {
     document.getElementById('add-employee-form')?.click()      // this will click the
     this.employeeService.updateEmployees(employee).subscribe(    // way to catch the data from the backend in frontend
-      (response : Employee )=>{
+      (response: Employee) => {
         console.log(response)
         this.getEmployess();      // referesh and show new added one 
       },
-      (error : any) =>{
+      (error: any) => {
         alert(error.message)
       }
-    )        
+    )
   }
 
   public onDeleteEmployee(employeeId: number): void {
     this.employeeService.deleteEmployees(employeeId).subscribe(    // way to catch the data from the backend in frontend
-      (response : void )=>{
+      (response: void) => {
         console.log(response)
         this.getEmployess();      // referesh and show new added one 
       },
-      (error : any) =>{
+      (error: any) => {
         alert(error.message)
       }
-    )        
+    )
+  }
+
+  public searchEmployee(key: string): void {
+    const result: Employee[] = []
+    for (const employee of this.employees) {
+      if (employee.name.toLowerCase().indexOf(key.toLocaleLowerCase()) !== -1
+        || employee.email.toLowerCase().indexOf(key.toLocaleLowerCase()) !== -1
+        || employee.email.toLowerCase().indexOf(key.toLocaleLowerCase()) !== -1
+        || employee.jobTitle.toLowerCase().indexOf(key.toLocaleLowerCase()) !== -1) {
+        result.push(employee)
+      }
+      this.employees = result;
+      if(result.length ===0 || !key ){
+        this.getEmployess();
+      }
+    }
   }
 
 }
